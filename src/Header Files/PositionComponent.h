@@ -6,11 +6,11 @@
 
 class PositionComponent : public IComponent {
 public:
-    float x, y;
+    int x, y;
     PositionComponent() = default;
     ~PositionComponent() = default;
     PositionComponent(const PositionComponent&) = default;
-    PositionComponent(float x_, float y_) : x(x_), y(y_) {}
+    PositionComponent(int x_, int y_) : x(x_), y(y_) {}
 };
 
 #endif // POSITION_COMPONENT_H

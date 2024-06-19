@@ -6,11 +6,11 @@
 
 struct VelocityComponent : public IComponent {
 public:
-    float dx, dy;
+    int dx, dy;
     VelocityComponent() = default;
     ~VelocityComponent() = default;
     VelocityComponent(const VelocityComponent&) = default;
-    VelocityComponent(float dx_, float dy_) : dx(dx_), dy(dy_) {}
+    VelocityComponent(int dx_, int dy_) : dx(dx_), dy(dy_) {}
 };
 
 #endif // VELOCITY_COMPONENT_H
