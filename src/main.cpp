@@ -10,23 +10,19 @@
 #include "SDL.h"
 
 int main(int argc, char *argv[]) {
+    long nbEntities = 100;
     EntityManager entityManager;
 
-    // Create entities
-    EntityID entity1 = entityManager.createEntity();
-    EntityID entity2 = entityManager.createEntity();
-
-    // Add components to entities
-    entityManager.getEntity(entity1).addComponent(PositionComponent(100, 225));
-    entityManager.getEntity(entity1).addComponent(VelocityComponent(1, -2));
-    entityManager.getEntity(entity1).addComponent(TextureComponent(125,46,200));
-    entityManager.getEntity(entity1).addComponent(RigidBodyComponent((rand() % 41) + 10, (rand() % 41) + 10));
-
-    entityManager.getEntity(entity2).addComponent(PositionComponent(305, 150));
-    entityManager.getEntity(entity2).addComponent(VelocityComponent(-5, 2));
-    entityManager.getEntity(entity2).addComponent(TextureComponent(5,199,5));
-    entityManager.getEntity(entity2).addComponent(RigidBodyComponent((rand() % 41) + 10, (rand() % 41) + 10));
-
+    if (argc == 2) {
+        nbEntities = std::atoi(argv[1]);
+    }
+    for (auto i=0; i<nbEntities; i++) {
+        EntityID entity = entityManager.createEntity();
+        entityManager.getEntity(entity).addComponent(PositionComponent(rand() % Config::getWindowWidth(), rand() % Config::getWindowHeight()));
+        entityManager.getEntity(entity).addComponent(VelocityComponent(rand() % -2 + rand() % 5, rand() % -2 + rand() % 5));
+        entityManager.getEntity(entity).addComponent(TextureComponent(rand() % 255,rand() % 255, rand() % 255));
+        entityManager.getEntity(entity).addComponent(RigidBodyComponent((rand() % 41) + 10, (rand() % 41) + 10));
+    }
 
     MovementSystem movementSystem;
     RenderSystem renderingSystem;

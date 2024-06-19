@@ -1,5 +1,7 @@
 #include <iostream>
 #include "../Header Files/MovementSystem.h"
+#include "../Header Files/RigidBodyComponent.h"
+#include "../Header Files/Config.h"
 
 void MovementSystem::update(std::vector<std::unique_ptr<Entity>>& entities)
 {
@@ -9,17 +11,16 @@ void MovementSystem::update(std::vector<std::unique_ptr<Entity>>& entities)
         {
             auto position = entity->getComponent<PositionComponent>();
             auto velocity = entity->getComponent<VelocityComponent>();
+            auto rigidBody = entity->getComponent<RigidBodyComponent>();
+
+            if (position->x + rigidBody->width + velocity->dx >= Config::getWindowWidth() || position->x + velocity->dx <= 0) {
+                velocity->dx *= -1;
+            } else if (position->y + rigidBody->height + velocity->dy >= Config::getWindowHeight() || position->y + velocity->dy <= 0) {
+                velocity->dy *= -1;
+            }
 
             position->x += velocity->dx;
             position->y += velocity->dy;
-
-            // Print updated positions
-            std::cout << "\n***********\n";
-            std::cout << "Entity Position: (" << entity->getComponent<PositionComponent>()->x
-                      << ", " << entity->getComponent<PositionComponent>()->y << ")" << std::endl;
-            std::cout << "Entity Position: (" << entity->getComponent<PositionComponent>()->x
-                      << ", " << entity->getComponent<PositionComponent>()->y << ")" << std::endl;
-            std::cout << "\n***********\n";
         }
     }
 }
