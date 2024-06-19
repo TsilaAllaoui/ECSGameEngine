@@ -15,6 +15,8 @@ public:
 
     Entity& getEntity(EntityID id) const;
 
+    std::vector<std::unique_ptr<Entity>>& getEntities();
+
 private:
     EntityID nextID = 0;
     std::vector<std::unique_ptr<Entity>> entities;

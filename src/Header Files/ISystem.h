@@ -6,7 +6,7 @@
 class ISystem {
 public:
     virtual ~ISystem() = default;
-    virtual void update(Entity&) = 0;
+    virtual void update(std::vector<std::unique_ptr<Entity>>&) = 0;
 };
 
 #endif

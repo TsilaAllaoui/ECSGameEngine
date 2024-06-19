@@ -9,7 +9,7 @@
 class MovementSystem : public ISystem {
 public:
     ~MovementSystem() = default;
-    void update(Entity& entity) override;
+    void update(std::vector<std::unique_ptr<Entity>>& entities) override;
 };
 
 #endif // MOVEMENT_SYSTEM_H

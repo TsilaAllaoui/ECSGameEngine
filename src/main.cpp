@@ -1,11 +1,13 @@
 #include <iostream>
+#include <thread>
 #include "./Header Files/EntityManager.h"
-#include "./Header Files/Entity.h"
-#include "./Header Files/IComponent.h"
 #include "./Header Files/PositionComponent.h"
 #include "./Header Files/VelocityComponent.h"
+// #include "./Header Files/TextureComponent.h"
+#include "./Header Files/MovementSystem.h"
+// #include "./Header Files/RenderSystem.h"
 
-int main() {
+int main(int argc, char **argv) {
     EntityManager entityManager;
 
     // Create entities
@@ -15,34 +17,23 @@ int main() {
     // Add components to entities
     entityManager.getEntity(entity1).addComponent(PositionComponent(10.0f, 20.0f));
     entityManager.getEntity(entity1).addComponent(VelocityComponent(1.0f, -0.5f));
+    // entityManager.getEntity(entity1).addComponent(TextureComponent("../Image Files/idle.png"));
 
     entityManager.getEntity(entity2).addComponent(PositionComponent(5.0f, 15.0f));
     entityManager.getEntity(entity2).addComponent(VelocityComponent(-0.5f, 2.0f));
+    // entityManager.getEntity(entity2).addComponent(TextureComponent("../Image Files/idle.png"));
 
-    // Check for components and update entities
-    if (entityManager.getEntity(entity1).hasComponent<PositionComponent>() 
-        && entityManager.getEntity(entity1).hasComponent<VelocityComponent>()) {
-        auto position = entityManager.getEntity(entity1).getComponent<PositionComponent>();
-        auto velocity = entityManager.getEntity(entity1).getComponent<VelocityComponent>();
 
-        position->x += velocity->dx;
-        position->y += velocity->dy;
+    MovementSystem movementSystem;
+    // RenderSystem renderingSystem;
+
+    while(true) {
+        movementSystem.update(entityManager.getEntities());
+        // renderingSystem.update(entityManager.getEntities());
+        std::this_thread::sleep_for(std::chrono::seconds(15));
     }
 
-    if (entityManager.getEntity(entity2).hasComponent<PositionComponent>() 
-        && entityManager.getEntity(entity2).hasComponent<VelocityComponent>()) {
-        auto position = entityManager.getEntity(entity2).getComponent<PositionComponent>();
-        auto velocity = entityManager.getEntity(entity2).getComponent<VelocityComponent>();
 
-        position->x += velocity->dx;
-        position->y += velocity->dy;
-    }
-
-    // Print updated positions
-    std::cout << "Entity 1 Position: (" << entityManager.getEntity(entity1).getComponent<PositionComponent>()->x
-              << ", " << entityManager.getEntity(entity1).getComponent<PositionComponent>()->y << ")" << std::endl;
-    std::cout << "Entity 2 Position: (" << entityManager.getEntity(entity2).getComponent<PositionComponent>()->x
-              << ", " << entityManager.getEntity(entity2).getComponent<PositionComponent>()->y << ")" << std::endl;
 
     return 0;
 }

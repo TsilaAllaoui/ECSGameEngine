@@ -24,3 +24,8 @@ Entity &EntityManager::getEntity(EntityID id) const
     // Handle entity not found
     throw std::runtime_error("Entity not found");
 }
+
+std::vector<std::unique_ptr<Entity>> &EntityManager::getEntities()
+{
+   return entities;
+}
