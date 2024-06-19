@@ -7,10 +7,11 @@
 #include "./Header Files/RigidBodyComponent.h"
 #include "./Header Files/MovementSystem.h"
 #include "./Header Files/RenderSystem.h"
+#include "./Header Files/GravitySystem.h"
 #include "SDL.h"
 
 int main(int argc, char *argv[]) {
-    long nbEntities = 100;
+    long nbEntities = 1;
     EntityManager entityManager;
 
     if (argc == 2) {
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]) {
 
     MovementSystem movementSystem;
     RenderSystem renderingSystem;
+    GravitySystem gravitySystem;
 
     SDL_Event event;
     bool quit = false;
@@ -40,6 +42,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        gravitySystem.update(entityManager.getEntities());
         movementSystem.update(entityManager.getEntities());
         renderingSystem.update(entityManager.getEntities());
         
