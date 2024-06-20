@@ -8,6 +8,7 @@
 #include "./Header Files/MovementSystem.h"
 #include "./Header Files/RenderSystem.h"
 #include "./Header Files/GravitySystem.h"
+#include "./Header Files/CollisionSystem.h"
 #include "SDL.h"
 
 int main(int argc, char *argv[]) {
@@ -19,15 +20,16 @@ int main(int argc, char *argv[]) {
     }
     for (auto i=0; i<nbEntities; i++) {
         EntityID entity = entityManager.createEntity();
-        entityManager.getEntity(entity).addComponent(PositionComponent(rand() % Config::getWindowWidth(), rand() % Config::getWindowHeight()));
+        // entityManager.getEntity(entity).addComponent(PositionComponent(Config::getWindowWidth() / 2, 0));//rand() % Config::getWindowWidth(), rand() % Config::getWindowHeight()));
         entityManager.getEntity(entity).addComponent(VelocityComponent(rand() % -2 + rand() % 5, rand() % -2 + rand() % 5));
         entityManager.getEntity(entity).addComponent(TextureComponent(rand() % 255,rand() % 255, rand() % 255));
-        entityManager.getEntity(entity).addComponent(RigidBodyComponent((rand() % 41) + 10, (rand() % 41) + 10));
+        entityManager.getEntity(entity).addComponent(RigidBodyComponent((rand() % 41) + 10, (rand() % 41) + 10, rand() % 11, rand() % 11));
     }
 
-    MovementSystem movementSystem;
+    // MovementSystem movementSystem;
     RenderSystem renderingSystem;
-    GravitySystem gravitySystem;
+    // GravitySystem gravitySystem;
+    CollisionSystem CollisionSystem;
 
     SDL_Event event;
     bool quit = false;
@@ -42,9 +44,10 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        gravitySystem.update(entityManager.getEntities());
-        movementSystem.update(entityManager.getEntities());
+        // gravitySystem.update(entityManager.getEntities());
+        // movementSystem.update(entityManager.getEntities());
         renderingSystem.update(entityManager.getEntities());
+        CollisionSystem.update(entityManager.getEntities());
         
         Uint32 frameEnd = SDL_GetTicks();
         Uint32 frameDuration = frameEnd - frameStart;

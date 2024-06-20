@@ -19,7 +19,7 @@ void MovementSystem::update(std::vector<std::unique_ptr<Entity>>& entities)
                 velocity->dy *= -1;
             }*/
 
-            if (position->y + rigidBody->height >= Config::getWindowHeight()) {
+            if (position->y + rigidBody->h >= Config::getWindowHeight()) {
                 velocity->dy = 0;
             }
 

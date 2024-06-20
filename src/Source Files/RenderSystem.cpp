@@ -33,13 +33,12 @@ void RenderSystem::update(std::vector<std::unique_ptr<Entity>> &entities)
 
     for (auto &entity : entities)
     {
-        if (entity->hasComponent<PositionComponent>() && entity->hasComponent<TextureComponent>() && entity->hasComponent<RigidBodyComponent>())
+        if (entity->hasComponent<TextureComponent>() && entity->hasComponent<RigidBodyComponent>())
         {
-            auto position = entity->getComponent<PositionComponent>();
             auto rigidBody = entity->getComponent<RigidBodyComponent>();
             auto textureComponent = entity->getComponent<TextureComponent>();
             auto texture = entity->getComponent<TextureComponent>()->texture;
-            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, rigidBody->width, rigidBody->height);
+            texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, rigidBody->w, rigidBody->h);
             assert(texture && "Texture null");
 
             // Lock the texture for writing pixel data
@@ -50,7 +49,7 @@ void RenderSystem::update(std::vector<std::unique_ptr<Entity>> &entities)
             // Fill the texture with a solid color (red in this example)
             Uint32 redColor = SDL_MapRGBA(SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888), textureComponent->r, textureComponent->g, textureComponent->b, 255);
             Uint32 *pixelPtr = static_cast<Uint32 *>(pixels);
-            int pixelCount = (rigidBody->width * rigidBody->height); // Assuming a 200x200 texture
+            int pixelCount = (rigidBody->w * rigidBody->h); // Assuming a 200x200 texture
             for (int i = 0; i < pixelCount; ++i)
             {
                 pixelPtr[i] = redColor;
@@ -60,7 +59,7 @@ void RenderSystem::update(std::vector<std::unique_ptr<Entity>> &entities)
             SDL_UnlockTexture(texture);
 
             // Render the texture to the center of the screen
-            SDL_Rect dstRect = {position->x, position->y, rigidBody->width, rigidBody->height};
+            SDL_Rect dstRect = {rigidBody->x, rigidBody->y, rigidBody->w, rigidBody->h};
             SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
         }
     }

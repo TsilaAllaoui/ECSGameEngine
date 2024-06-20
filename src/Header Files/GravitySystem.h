@@ -7,7 +7,8 @@
 #include "box2d/box2d.h"
 
 class GravitySystem : public ISystem {
-    b2Vec2 gravity;
+    std::unique_ptr<b2Vec2> gravity;
+    std::unique_ptr<b2World> world;
 public:
     GravitySystem();
     ~GravitySystem() = default;

@@ -22,6 +22,7 @@ set(SOURCES
     src/Source\ Files/Config.cpp
     src/Source\ Files/RenderSystem.cpp
     src/Source\ Files/GravitySystem.cpp
+    src/Source\ Files/CollisionSystem.cpp
 )
 
 add_executable(ECSGameEngine ${SOURCES})

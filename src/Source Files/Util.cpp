@@ -12,3 +12,8 @@ std::shared_ptr<Util> Util::getInstance()
     }
     return _instance;
 }
+
+b2Vec2 Util::sdlCoordinatesToBox2d(int x, int y)
+{
+    return b2Vec2(x, Config::getWindowHeight() - y);
+}
